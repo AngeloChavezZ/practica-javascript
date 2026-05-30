@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Práctica JavaScript — Angelo Chávez</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            color: #2d3748;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: #2b6cb0;
+        }
+
+        header p {
+            color: #718096;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tarjeta {
+            background-color: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-top: 4px solid #2b6cb0;
+        }
+
+        .tarjeta h2 {
+            font-size: 1rem;
+            color: #2b6cb0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e0;
+            background-color: #f7fafc;
+            color: #2d3748;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #2b6cb0;
+        }
+
+        button {
+            width: 100%;
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #2c5282;
+        }
+
+        .resultado {
+            margin-top: 15px;
+            padding: 12px 15px;
+            background-color: #ebf8ff;
+            border-radius: 10px;
+            min-height: 45px;
+            color: #2b6cb0;
+            font-size: 0.95rem;
+            border-left: 4px solid #2b6cb0;
+        }
+
+        .resultado ul {
+            padding-left: 20px;
+        }
+
+        .resultado li {
+            margin: 4px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            border: 1px solid #bee3f8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 3px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #a0aec0;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🧠 Práctica JavaScript</h1>
+        <p>Angelo Chávez — Ejercicios interactivos</p>
+    </header>
+
+    <div class="grid">
+
+        <div class="tarjeta">
+            <h2>👤 Mi presentación</h2>
+            <button onclick="mostrarNombre()">Mostrar mi información</button>
+            <div class="resultado" id="res1">Haz clic para ver tu información</div>
+        </div>
+
+        <div class="tarjeta">
+            <h2>👋 Saludar usuario</h2>
+            <input id="nombreUsuario" type="text" placeholder="Escribe tu nombre">
+            <button onclick="saludarUsuario()">Saludar</button>
+            <div class="resultado" id="res2">Escribe tu nombre y haz clic</div>
+        </div>
+
+        <div class="tarjeta">
+            <h2>🎂 Verificar edad</h2>
+            <input id="nombreEdad" type="text" placeholder="Tu nombre">
+            <input id="edadUsuario" type="number" placeholder="Tu edad">
+            <button onclick="verificarEdad()">Verificar</button>
+            <div class="resultado" id="res3">Ingresa tus datos y verifica</div>
+        </div>
+
+        <div class="tarjeta">
+            <h2>🕐 Saludo por hora</h2>
+            <input id="horaUsuario" type="number" placeholder="Escribe la hora (0-23)">
+            <button onclick="verificarHora()">Ver saludo</button>
+            <div class="resultado" id="res4">Ingresa la hora del día</div>
+        </div>
+
+        <div class="tarjeta">
+            <h2>🍎 Lista de frutas</h2>
+            <button onclick="mostrarFrutas()">Mostrar frutas</button>
+            <div class="resultado" id="res5">Haz clic para ver las frutas</div>
+        </div>
+
+        <div class="tarjeta">
+            <h2>💡 Mis habilidades</h2>
+            <input id="nuevaHabilidad" type="text" placeholder="Agrega una habilidad">
+            <button onclick="agregarHabilidad()">Agregar</button>
+            <button onclick="mostrarHabilidades()" style="background-color:#38a169; margin-top:5px">Ver todas</button>
+            <div class="resultado" id="res6">Agrega o visualiza tus habilidades</div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Angelo Chávez — Práctica JavaScript</p>
+    </footer>
+
+    <script>
+        let habilidades = ["HTML", "CSS", "JavaScript", "Python", "Excel"];
+
+        function mostrarNombre() {
+            let nombre = "Angelo";
+            let apellido = "Chávez";
+            let edad = 25;
+            let carrera = "Ingeniería en Software";
+            document.getElementById("res1").innerHTML =
+                "👤 <strong>" + nombre + " " + apellido + "</strong><br>" +
+                "🎂 " + edad + " años<br>" +
+                "📚 " + carrera;
+        }
+
+        function saludarUsuario() {
+            let nombre = document.getElementById("nombreUsuario").value;
+            if (nombre === "") {
+                document.getElementById("res2").innerHTML = "⚠️ Escribe tu nombre primero";
+                return;
+            }
+            document.getElementById("res2").innerHTML = "¡Hola <strong>" + nombre + "</strong>, bienvenido! 👋";
+        }
+
+        function verificarEdad() {
+            let nombre = document.getElementById("nombreEdad").value;
+            let edad = document.getElementById("edadUsuario").value;
+            if (nombre === "" || edad === "") {
+                document.getElementById("res3").innerHTML = "⚠️ Ingresa tu nombre y edad";
+                return;
+            }
+            if (edad >= 18) {
+                document.getElementById("res3").innerHTML = "✅ Hola <strong>" + nombre + "</strong>, eres mayor de edad";
+            } else {
+                document.getElementById("res3").innerHTML = "❌ Hola <strong>" + nombre + "</strong>, eres menor de edad";
+            }
+        }
+
+        function verificarHora() {
+            let hora = document.getElementById("horaUsuario").value;
+            if (hora === "") {
+                document.getElementById("res4").innerHTML = "⚠️ Ingresa la hora";
+                return;
+            }
+            if (hora < 12) {
+                document.getElementById("res4").innerHTML = "🌅 Buenos días";
+            } else if (hora >= 12 && hora < 18) {
+                document.getElementById("res4").innerHTML = "☀️ Buenas tardes";
+            } else {
+                document.getElementById("res4").innerHTML = "🌙 Buenas noches";
+            }
+        }
+
+        function mostrarFrutas() {
+            let frutas = ["🍎 Manzana", "🍐 Pera", "🍇 Uva", "🍉 Sandía", "🥭 Mango", "🍓 Fresa", "🥝 Kiwi", "🍒 Cereza"];
+            let lista = "<ul>";
+            for (let i = 0; i < frutas.length; i++) {
+                lista = lista + "<li>" + frutas[i] + "</li>";
+            }
+            lista = lista + "</ul>";
+            document.getElementById("res5").innerHTML = lista;
+        }
+
+        function mostrarHabilidades() {
+            let lista = "";
+            for (let i = 0; i < habilidades.length; i++) {
+                lista = lista + "<span class='tag'>" + habilidades[i] + "</span>";
+            }
+            document.getElementById("res6").innerHTML = lista;
+        }
+
+        function agregarHabilidad() {
+            let nueva = document.getElementById("nuevaHabilidad").value;
+            if (nueva === "") {
+                document.getElementById("res6").innerHTML = "⚠️ Escribe una habilidad primero";
+                return;
+            }
+            habilidades.push(nueva);
+            document.getElementById("nuevaHabilidad").value = "";
+            mostrarHabilidades();
+        }
+    </script>
+
+</body>
+</html>
+</body>
+</html>
